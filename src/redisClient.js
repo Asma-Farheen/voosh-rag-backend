@@ -1,20 +1,17 @@
-// backend/src/redisClient.js
+// src/redisClient.js
 import { createClient } from "redis";
 
-export let redisClient = null;
+const REDIS_HOST = process.env.REDIS_HOST || "localhost";
+const REDIS_PORT = process.env.REDIS_PORT || 6379;
 
-export async function initRedis() {
-  const REDIS_HOST = process.env.REDIS_HOST || "redis";
-  const REDIS_PORT = Number(process.env.REDIS_PORT || 6379);
+// 👇 NEW: allow full REDIS_URL (used on Render)
+const REDIS_URL =
+  process.env.REDIS_URL || `redis://${REDIS_HOST}:${REDIS_PORT}`;
 
-  redisClient = createClient({
-    url: `redis://${REDIS_HOST}:${REDIS_PORT}`,
-  });
+export const redisClient = createClient({
+  url: REDIS_URL,
+});
 
-  redisClient.on("error", (err) => {
-    console.error("Redis error:", err);
-  });
-
-  await redisClient.connect();
-  console.log("✅ Redis connected");
-}
+redisClient.on("error", (err) => {
+  console.error("Redis error:", err);
+});
