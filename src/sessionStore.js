@@ -1,12 +1,12 @@
-// backend/src/sessionStore.js
 import { redisClient } from "./redisClient.js";
+import { SESSION_TTL } from "./config/env.js";
 
 function sessionKey(sessionId) {
   return `session:${sessionId}:messages`;
 }
 
 function getSessionTTL() {
-  return Number(process.env.SESSION_TTL || 3600);
+  return SESSION_TTL;
 }
 
 export async function getSessionHistory(sessionId) {
