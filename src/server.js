@@ -6,8 +6,8 @@ import dotenv from "dotenv";
 import axios from "axios";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { QdrantClient } from "@qdrant/js-client-rest";
-
 import { redisClient, initRedis } from "./redisClient.js";
+
 import {
   getSessionHistory,
   saveSessionHistory,
